@@ -37,12 +37,19 @@ public class Program {
 		System.out.println("Inserted! New ID: "+ newSeller.getId());
 		*/
 		
+		/*
 		System.out.println("\n=== test update ====");
 		seller = sellerDao.findById(8);
 		seller.setName("Leonardo Rosalino");
 		seller.setEmail("lerosalino@email.com");
 		sellerDao.update(seller);
 		System.out.println(seller);
+		*/
+		
+		System.out.println("\n=== test delete ====");
+		seller = sellerDao.findById(10);
+		sellerDao.deleteById(seller.getId());
+		System.out.println("Registro deletado.");
 		
 	}
 
