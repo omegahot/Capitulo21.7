@@ -23,7 +23,9 @@ public class Program {
 
 		list.forEach(System.out::println);
 		
-		
+		System.out.println("\n=== test findAll ====");
+		List<Seller> listaTudo = sellerDao.findAll();
+		listaTudo.forEach(System.out::println);
 	}
 
 }
