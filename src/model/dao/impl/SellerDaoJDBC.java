@@ -79,6 +79,8 @@ public class SellerDaoJDBC implements SellerDao {
 				
 				return obj;
 				*/
+				
+				/*
 				Seller obj = new Seller(rs.getInt("Id"), 
 										rs.getString("name"), 
 										rs.getString("email"),
@@ -87,6 +89,11 @@ public class SellerDaoJDBC implements SellerDao {
 										new Department(rs.getInt("departmentId"), 
 													   rs.getString("depName")));
 				
+				return obj;
+				*/
+				
+				Department dep = instanciateDepartment(rs);
+				Seller obj = instanciateSeller(rs, dep);
 				return obj;
 			}
 			
@@ -101,6 +108,26 @@ public class SellerDaoJDBC implements SellerDao {
 		}
 
 		return null;
+	}
+
+	private Seller instanciateSeller(ResultSet rs, Department dep) throws SQLException {
+		Seller obj = new Seller(
+				rs.getInt("Id"), 
+				rs.getString("name"), 
+				rs.getString("email"),
+				rs.getDate("birthDate"),
+				rs.getDouble("baseSalary"),
+				dep);
+
+		return obj;
+	}
+
+	private Department instanciateDepartment(ResultSet rs) throws SQLException {
+		Department dep = new Department(
+				rs.getInt("departmentId"),
+				rs.getString("depName"));
+
+		return dep;
 	}
 
 	@Override
