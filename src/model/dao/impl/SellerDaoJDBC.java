@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,7 +66,47 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void update(Seller obj) {
-		// TODO Auto-generated method stub
+
+		PreparedStatement ps = null;
+		
+		try {
+			conn.setAutoCommit(false);
+			
+			ps = conn.prepareStatement(
+					"update seller set "
+					+ "name = ?, "
+					+ "email = ?, "
+					+ "birthDate = ?, "
+					+ "baseSalary = ?, "
+					+ "departmentId = ? "
+					+ "where id = ?"
+					);
+			
+			ps.setString(1, obj.getName());
+			ps.setString(2, obj.getEmail());
+			ps.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
+			ps.setDouble(4, obj.getBaseSalary());
+			ps.setInt(5, obj.getDepartment().getId());
+			ps.setInt(6, obj.getId());
+			
+			int rowsAffect = ps.executeUpdate();
+			
+			if (rowsAffect == 1) {
+				conn.commit();
+				
+			} else {
+				conn.rollback();
+				throw new DbException("Linhas afetadas acima do esperado.");
+				
+			}
+			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(ps);
+		}
 		
 	}
 
